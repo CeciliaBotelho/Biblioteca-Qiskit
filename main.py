@@ -15,8 +15,9 @@ from portas_quanticas.ql import ql_implication
 from portas_quanticas.xor_ominus import xor_ominus
 from portas_quanticas.xor_otimes import xor_otimes
 from portas_quanticas.xor_oplus import xor_oplus
+from portas_quanticas.xor_grouping_overlap import xor_grouping_overlap
+from portas_quanticas.xnor_grouping_overlap import xnor_grouping_overlap
 from portas_quanticas.medirqubits import medir_qubits
-
 
 def mostrar_menu():
     print("Selecione a porta quântica desejada:")
@@ -31,7 +32,9 @@ def mostrar_menu():
     print("9: Aplicar XOR Fuzzy otimes")
     print("10: Aplicar XOR Fuzzy oplus")
     print("11: Aplicar função de Implicação (QL)")
-    print("12: Realizar medição")
+    print("12: Aplicar XOR Fuzzy Grouping Overlap")
+    print("13: Aplicar XNOR Fuzzy Grouping Overlap")
+    print("14: Realizar medição")
     print("0: Sair")
     escolha = input("Digite o número da sua escolha e pressione Enter: ")
     return escolha
@@ -155,7 +158,29 @@ def main():
             ql_implication(my_circuit, control_qubit1, control_qubit2, target_qubit, aux_qubit1, aux_qubit2)
             print("Circuito com função de Implicação QL aplicada:")
 
-        elif escolha == '12':  # Opção para medir qubits e exibir histograma
+        elif escolha == '12':  # Implementação da chamada para a função de XOR G O
+            if num_qubits < 11:
+                print("O número mínimo de qubits para utilizar a opção XOR Grouping Overlap é 11.")
+            else:
+                selected_qubits = list(map(int, input("Digite os índices de 11 qubits para o circuito XOR Grouping Overlap, separados por espaço (começando de 0): ").split()))
+                if len(selected_qubits) != 11:
+                    print("Erro: Você deve selecionar exatamente 11 qubits.")
+                else:
+                    xor_grouping_overlap(my_circuit, selected_qubits)
+                    print("Circuito com XOR Fuzzy ôplus aplicado:")
+
+        elif escolha == '13':  # Implementação da chamada para a função de XNOR G O
+            if num_qubits < 11:
+                print("O número mínimo de qubits para utilizar a opção XNOR Grouping Overlap é 11")
+            else:
+                selected_qubits = list(map(int, input("Digite os índices de 11 qubits para o circuito XNOR Grouping Overlap, separados por espaço (começando de 0): ").split()))
+                if len(selected_qubits) != 11:
+                    print("Erro: Você deve selecionar exatamente 11 qubits.")
+                else:
+                    xnor_grouping_overlap(my_circuit, selected_qubits)
+                    print("Circuito com XOR Fuzzy ôplus aplicado:")
+
+        elif escolha == '14':  # Opção para medir qubits e exibir histograma
             medir_qubits(my_circuit)
 
         elif escolha == '0':
